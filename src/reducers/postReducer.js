@@ -1,14 +1,23 @@
-const initialState = {
-    posts : []
-}
+import { 
+    FETCH_POSTS_SUCCESSFUL ,
+    FETCH_POSTS_FAILURE,
+    FETCH_POST_SUCCESSFUL
+ } from '../actions/types'
+
+const initialState = {} ;
 
 export default (state = initialState , action) => {
     switch(action.type){
-        case 'GET_POSTS' :
+        case FETCH_POSTS_SUCCESSFUL :
             //console.log(action.payload);
             return {
                 ...state ,
                 posts : action.payload
+            };
+        case FETCH_POST_SUCCESSFUL :
+            return {
+                ...state ,
+                post : action.payload
             }
         default :
             return state ;
