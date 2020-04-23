@@ -3,11 +3,8 @@ import React from 'react'
 import requireAuth from '../requireAuth'
 import PostList from '../Posts/PostList'
 
-class Home extends React.Component {
 
-    componentDidMount(){
-        console.log('Beginning DidMount (Home)')
-    }
+class Home extends React.Component {
 
     render(){
         return (

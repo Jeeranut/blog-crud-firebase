@@ -24,17 +24,22 @@ class Signup extends Component {
         e.preventDefault();
         
         console.log('Signup26 props : ' , this.props);
-        this.props.signUpWithEmailPassword(this.state , () => {
-            this.props.history.push('/');
-        })
-        this.setState({
-            email : '',
-            password : '',
-            confirmPassword : '',
-            displayName : '',
-            firstName : '',
-            lastName : ''
-        })
+        if(this.state.password === this.state.confirmPassword){
+            
+            this.props.signUpWithEmailPassword(this.state , () => {
+                this.props.history.push('/');
+            })
+            this.setState({
+                email : '',
+                password : '',
+                confirmPassword : '',
+                displayName : '',
+                firstName : '',
+                lastName : ''
+            })
+        } else {
+            alert('Password is not match');
+        }
     }
 
     onSigninWithGoogle = () => {
@@ -61,8 +66,8 @@ class Signup extends Component {
                     <button onClick={this.onSigninWithGoogle} className="btn google-btn social-btn" type="button"><span><i className="fab fa-google-plus-g" /> Sign up with Google+</span> </button>
                     </div>
                     <p style={{textAlign: 'center'}}> OR</p>
-                    <input onChange={this.onChange} value={this.state.email} type="email" id="email" className="form-control" placeholder="Email address" required autoFocus />
-                    <input onChange={this.onChange} value={this.state.displayName} type="text" id="displayName" className="form-control" placeholder="Display Name" required autoFocus />
+                    <input onChange={this.onChange} value={this.state.email} type="email" id="email" className="form-control" placeholder="Email address" required autoFocus autoComplete="off" />
+                    <input onChange={this.onChange} value={this.state.displayName} type="text" id="displayName" className="form-control" placeholder="Display Name" required autoFocus  />
                     <input onChange={this.onChange} value={this.state.firstName} type="text" id="firstName" className="form-control" placeholder="First Name" required autoFocus />
                     <input onChange={this.onChange} value={this.state.lastName} type="text" id="lastName" className="form-control" placeholder="Last Name" required autoFocus />
                     <input onChange={this.onChange} value={this.state.password} type="password" id="password" className="form-control" placeholder="Password" required />
@@ -70,7 +75,7 @@ class Signup extends Component {
                     <button className="btn btn-success btn-block" type="submit"><i className="fas fa-sign-in-alt" /> Sign up</button>
                     
                 </form>
-                <button onClick={this.onSignOut} className="btn btn-danger" >Sign Out</button>
+                {/* <button onClick={this.onSignOut} className="btn btn-danger" >Sign Out</button> */}
             <br />
             </div>
         )

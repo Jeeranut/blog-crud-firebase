@@ -135,14 +135,11 @@ export const addCollectionAndDocument = async (collectionKey , objectsToAdd) => 
 // Add convert collections snapshot to map function
 export const convertCollectionSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map(doc => {
-    const { authorFirstName , authorLastName , title , content } = doc.data();
+    //const { authorFirstName , authorLastName , title , content } = doc.data();
 
     return{
       id : doc.id ,
-      authorFirstName ,
-      authorLastName ,
-      title ,
-      content
+      ...doc.data()
     }
   })
 

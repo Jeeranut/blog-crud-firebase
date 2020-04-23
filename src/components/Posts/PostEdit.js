@@ -60,19 +60,18 @@ class PostForm extends Component {
         //console.log('postform28 props : ',this.props);
         return (
             <div className="container" style={{marginTop : '10px'}}>
-                <form onSubmit={this.onEditClick} className="white" style={{padding : '10px'}}>
-                        <h3 className="grey-text text-darken-3">Edit Post</h3>
-                        <div className="input-field">
+                <form onSubmit={this.onEditClick} className="ui form" style={{padding : '20px'}}>
+                        <h2 className="ui header">Edit Post</h2>
+                        <div className="field">
                             <label htmlFor="title" >Title</label>
                             <input type="text" id="title" onChange={this.onChange} value={this.state.title} />
                         </div>
-                        <div className="input-field">
+                        <div className="field">
                             <label htmlFor="content" >Content</label>
                             <input type="text" id="content" onChange={this.onChange} value={this.state.content} />
                         </div>
-
-                        <button className="btn waves-effect waves-light" type="submit" name="action">Posts
-                            <i className="material-icons right">send</i>
+                        <button className="ui green button right labeled icon" type="submit" name="action">Posts
+                            <i className="comment icon"></i>
                         </button>    
                 </form>
             </div>

@@ -9,7 +9,10 @@ import {
     FETCH_POST_SUCCESSFUL ,
     FETCH_POST_FAILURE,
     EDIT_POST,
-    EDIT_POST_SUCCESSFUL
+    EDIT_POST_SUCCESSFUL ,
+    DELETE_POST,
+    DELETE_POST_SUCCESSFUL,
+    DELETE_POST_FAILURE
 } from "./types"
 import { firestore } from '../firebase/firebase.utils'
 
@@ -18,7 +21,6 @@ export const fetchPosts = (posts) => (dispatch) => {
         type : FETCH_POSTS_SUCCESSFUL ,
         payload : posts
     })
-    
 }
 
 export const fetchPost = (id) => (dispatch) => {
@@ -27,7 +29,7 @@ export const fetchPost = (id) => (dispatch) => {
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log("Document data:", doc.data());
+            //console.log("Document data:", doc.data());
             dispatch({
                 type : FETCH_POST_SUCCESSFUL ,
                 payload : doc.data()
@@ -69,10 +71,9 @@ export const editPost = (post , callback) => (dispatch) => {
         console.log('post65 Error updating document : ' ,error);    
     })
     
-
 }
 
-export const createPost = ({title , content}) => (dispatch , getState) => {
+export const createPost = ({title , content} , callback) => (dispatch , getState) => {
 
     dispatch({
         type : CREATE_POST
@@ -92,6 +93,7 @@ export const createPost = ({title , content}) => (dispatch , getState) => {
         dispatch({
             type : CREATE_POST_SUCCESSFUL 
         })
+        callback('/');
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
@@ -100,5 +102,23 @@ export const createPost = ({title , content}) => (dispatch , getState) => {
             payload : error.message
         })
     });
+}
 
+export const deletePost = (id) => (dispatch) => {
+    dispatch({
+        type : DELETE_POST
+    })
+
+    const docRef = firestore.collection('posts').doc(id);
+    docRef.delete().then(() => {
+        console.log('Document successfully deleted !');
+        dispatch({
+            type : DELETE_POST_SUCCESSFUL
+        })
+    }).catch((error) => {
+        console.log('Error removing document : ' , error);
+        dispatch({
+            type : DELETE_POST_FAILURE
+        })
+    })
 }

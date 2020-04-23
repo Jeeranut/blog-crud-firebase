@@ -19,12 +19,12 @@ class App extends React.Component {
         console.log('constructor props : ' , props)
         props.authSigninRequest();
         this.unsubscribeFromAuth = auth.onAuthStateChanged( async (user) => {
-            console.log('beginning of authchange')
+            //console.log('beginning of authchange')
             if(user){
                 //console.warn("This is from App.js line 16 : ",user);
                 const userRef = await createUserProfileDoc(user);
                 
-                console.log('before snapshot')
+                //console.log('before snapshot')
                 userRef.onSnapshot((snapShot) => {
                     //console.warn("From App.js onSnapshot data : " , snapShot);
                     this.setState({ 
@@ -33,7 +33,7 @@ class App extends React.Component {
                             ...snapShot.data()
                         }
                     })
-                    console.warn('App35  : ' , this.state.currentUser);
+                    //console.warn('App35  : ' , this.state.currentUser);
                     this.props.authSignin(this.state.currentUser);
                 })
             } else {

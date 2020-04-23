@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { getPostsAndUsers } from '../../actions/index'
-import UserHeader from './UserHeader'
+//import UserHeader from './UserHeader'
+//import ConfirmModal from '../Layouts/ConfirmModal'
 import { firestore , convertCollectionSnapshotToMap } from '../../firebase/firebase.utils'
-import { fetchPosts } from '../../actions/post'
+import { fetchPosts , deletePost } from '../../actions/post'
+import ConfirmModal from '../Layouts/ConfirmModal'
 
  class PostList extends Component {
 
@@ -39,14 +41,15 @@ import { fetchPosts } from '../../actions/post'
     }
 
     onDeleteClick = (e) => {
-        //console.log('e from button : ' , e.target.id);
+        console.log('Start on click');
+        this.props.deletePost(e.target.id);
 
-        const docRef = firestore.collection('posts').doc(e.target.id);
-        docRef.delete().then(() => {
-            console.log('Document successfully deleted !');
-        }).catch((error) => {
-            console.log('Error removing document : ' , error);
-        })
+        // const docRef = firestore.collection('posts').doc(e.target.id);
+        // docRef.delete().then(() => {
+        //     console.log('Document successfully deleted !');
+        // }).catch((error) => {
+        //     console.log('Error removing document : ' , error);
+        // })
     }
 
     renderList(){
@@ -64,8 +67,14 @@ import { fetchPosts } from '../../actions/post'
                             <p>{post.content}</p>
                         </div>
                         <div>
-                            <Link to={`/post/edit/${post.id}`} className="waves-effect waves-light btn">Edit</Link>
-                            <button onClick={this.onDeleteClick} id={post.id} className="waves-effect deep-orange darken-2 btn" >Delete</button>
+                            <Link to={`/post/edit/${post.id}`} className="ui yellow button">Edit</Link>
+                            {/* <button onClick={this.onDeleteClick} id={post.id} className="ui red button" >Delete</button> */}
+                            <ConfirmModal 
+                                className="ui red button" 
+                                buttonName="Delete"
+                                post={post} 
+                                onConfirmClick={() => this.props.deletePost(post.id) } 
+                            />
                         </div>
                         {/* <UserHeader userId={post.uid} /> */}
                     </div>
@@ -78,6 +87,7 @@ import { fetchPosts } from '../../actions/post'
     render() {
         return (
             <div className="ui relaxed divided list">
+               
                 {
                     this.renderList()
                 }
@@ -90,4 +100,4 @@ const mapStateToProps = (state) => ({
     posts : state.posts
 })
 
-export default connect(mapStateToProps , {getPostsAndUsers , fetchPosts})(PostList);
+export default connect(mapStateToProps , {getPostsAndUsers , fetchPosts , deletePost})(PostList);

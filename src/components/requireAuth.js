@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Spinner from './Layouts/Spinner'
 
 export default (ChildComponent) => {
     class ComposedComponent extends React.Component{
@@ -28,7 +29,9 @@ export default (ChildComponent) => {
 
         renderHelper(){
             if(this.props.isLoading){
-                return <div>Loading......</div>
+                return (
+                    <Spinner message="Loading..." />
+                )
             } else {
                 return <ChildComponent {...this.props} />;
             }

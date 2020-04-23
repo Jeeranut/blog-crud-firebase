@@ -75,7 +75,7 @@ class Signin extends Component {
                     <a href="#" id="cancel_reset"><i className="fas fa-angle-left" /> Back</a>
                 </form>
 
-                <button onClick={this.onSignOut} className="btn btn-danger" >Sign Out</button>
+                {/* <button onClick={this.onSignOut} className="btn btn-danger" >Sign Out</button> */}
             <br />
             </div>
         )
